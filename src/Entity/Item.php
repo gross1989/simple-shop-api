@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ItemRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Ignore;
 
 #[ORM\Entity(repositoryClass: ItemRepository::class)]
 class Item
@@ -22,10 +23,14 @@ class Item
 
     #[ORM\ManyToOne(inversedBy: 'items')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Ignore]
     private ?ShoppingCart $shoppingCart = null;
 
     #[ORM\Column(type: Types::DECIMAL, precision: 15, scale: 2)]
     private ?string $price = null;
+
+    #[ORM\Column(options: ['default' => 1])]
+    private ?int $quantity = null;
 
     public function getId(): ?int
     {
@@ -76,6 +81,18 @@ class Item
     public function setPrice(string $price): static
     {
         $this->price = $price;
+
+        return $this;
+    }
+
+    public function getQuantity(): ?int
+    {
+        return $this->quantity;
+    }
+
+    public function setQuantity(int $quantity): static
+    {
+        $this->quantity = $quantity;
 
         return $this;
     }

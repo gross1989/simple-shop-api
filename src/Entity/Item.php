@@ -30,7 +30,7 @@ class Item
     private ?string $price = null;
 
     #[ORM\Column(options: ['default' => 1])]
-    private ?int $quantity = null;
+    private ?int $quantity = 1;
 
     public function getId(): ?int
     {
